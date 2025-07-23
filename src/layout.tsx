@@ -8,10 +8,10 @@ export default function Layout() {
 
   useEffect(() => {
     const calculateHeight = () => {
-      const navbarHeight = navbar.current?.offsetHeight || 0;
+      const navbarHeight = document.getElementById("navbar")?.offsetHeight || 0;
       const windowHeight = window.innerHeight;
 
-      setHeight(windowHeight - navbarHeight);
+      setHeight(windowHeight - navbarHeight + 1);
     }
 
     calculateHeight();
