@@ -4,7 +4,7 @@ export default function Navbar() {
   const location = useLocation();
   const isActive = (path: string) => location.pathname === path ? "tab-active" : "";
   return (
-    <div className="flex justify-center p-1" data-theme="dark">
+    <div className="flex justify-center p-1" data-theme="dark" id="navbar">
       <ul className="tabs tabs-border ">
 
         {/* <input type="radio" name="my_tabs_2" className="tab" aria-label="Tab 1" />
