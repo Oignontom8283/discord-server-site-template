@@ -1,9 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./Navbar";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Layout() {
-  const navbar = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {
