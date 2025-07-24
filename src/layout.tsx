@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
+import Footer from "./components/Footer";
 
 export default function Layout() {
   const [height, setHeight] = useState(0);
@@ -25,14 +26,12 @@ export default function Layout() {
       <Navbar />
 
       {/* Contenu principal avec padding-bottom pour footer */}
-      <div className="flex-1" style={{ minHeight: `${height}px` }}>
+      <div className="flex flex-col" style={{ minHeight: `${height}px` }}>
         <Outlet />
       </div>
 
       {/* Footer (hors écran) */}
-      <footer className="bg-gray-800">
-        Footer
-      </footer>
+      <Footer />
     </div>
   );
 }
