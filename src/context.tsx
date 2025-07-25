@@ -12,7 +12,10 @@ type DataContextValue = {
   setData: React.Dispatch<React.SetStateAction<DataContextType | null>>;
 }
 
-export const DataContext = createContext<DataContextValue | null>(null);
+export const DataContext = createContext<DataContextValue>({
+  data: null,
+  setData: () => {},
+});
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [data, setData] = useState<DataContextType | null>(null);
