@@ -1,0 +1,25 @@
+import React, { createContext, useState } from "react";
+import type { DiscordInviteStatusV9 } from 'discord-guildpeek';
+
+type DataContextType = {
+  invite: DiscordInviteStatusV9;
+  config: Record<string, any>;
+  // others data for future use.
+}
+
+type DataContextValue = {
+  data: DataContextType | null;
+  setData: React.Dispatch<React.SetStateAction<DataContextType | null>>;
+}
+
+export const DataContext = createContext<DataContextValue | null>(null);
+
+export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [data, setData] = useState<DataContextType | null>(null);
+
+  return (
+    <DataContext.Provider value={{ data, setData }}>
+      {children}
+    </DataContext.Provider>
+  );
+};

@@ -1,7 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "./components/Footer";
+import { DataContext } from "./context";
 
 export default function Layout() {
   const [height, setHeight] = useState(0);
@@ -20,6 +21,17 @@ export default function Layout() {
     return () => window.removeEventListener('resize', calculateHeight);
   }, []);
 
+
+  const dataContext = useContext(DataContext);
+  if (!dataContext) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <span className="loading loading-spinner loading-xl"></span>
+      </div>
+    )
+  }
+
+  
   return (
     <div className="flex flex-col min-h-screen">
       {/* Navbar */}
