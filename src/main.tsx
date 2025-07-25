@@ -6,17 +6,20 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Layout from './layout'
 import Articles from './pages/Articles'
+import { DataProvider } from './context'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/articles" element={<Articles />} />
-        </Route>
-      </Routes>
+      <DataProvider>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/articles" element={<Articles />} />
+          </Route>
+        </Routes>
+      </DataProvider>
     </BrowserRouter>
   </StrictMode>
 )
