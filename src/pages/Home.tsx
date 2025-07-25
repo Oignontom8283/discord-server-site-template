@@ -1,4 +1,12 @@
+import { useContext } from "react";
+import { DataContext } from "../context";
+
 export default function Home() {
+
+  const dataContext = useContext(DataContext);
+
+  console.log("Datacontext", dataContext)
+
   return (
     <div className="relative min-h-screen">
       {/* Vidéo background */}
@@ -7,6 +15,8 @@ export default function Home() {
         autoPlay
         loop
         muted
+        disablePictureInPicture
+        onContextMenu={(e) => e.preventDefault()}
         className="fixed top-0 left-0 w-full h-full object-cover -z-10"
       />
 
