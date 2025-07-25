@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
+public/config.yaml
 package-lock.json
 public/assets
 pnpm-lock.yaml
