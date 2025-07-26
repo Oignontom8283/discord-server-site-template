@@ -6,7 +6,6 @@ import { DataContext } from "./context";
 import axios from "axios";
 import * as yaml from 'js-yaml'
 import { getInviteStatus } from "discord-guildpeek";
-import type z from "zod";
 import { configZodShemat } from "./shemat";
 
 export default function Layout() {
