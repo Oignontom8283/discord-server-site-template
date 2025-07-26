@@ -16,10 +16,17 @@ export default function Home() {
         }
       }
       setState(!state);
-
     }] as const;
   })();
-  const [backgroundVideoSound, setBackgroundVideoSound] = useState(false);
+  const [backgroundVideoSound, setBackgroundVideoSound] = (() => {
+    const [state, setState] = useState(false);
+    return [state, () => {
+      if (videoRef.current) {
+        videoRef.current.muted = !state;
+      }
+      setState(!state);
+    }] as const;
+  })();
 
   const { data } = useContext(DataContext);
 
@@ -29,23 +36,12 @@ export default function Home() {
     <div className="relative min-h-screen">
 
       {/* Contrôle background video */}
-      <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-[9999]">
+      <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-[100]">
         {/* Play Button */}
-        <button
-          className="w-8 h-8 bg-gray-800 text-white rounded-lg flex items-center justify-center shadow-lg hover:bg-blue-700 transition"
-          onClick={() => toggleBackgroundVideoPlaying()}
-        >
-          {backgroundVideoPlaying ? (
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-6.364-3.682A1 1 0 007 8.5v7a1 1 0 001.388.924l6.364-3.682a1 1 0 000-1.664z" />
-            </svg>
-          ) : (
-            //TODO: Add pause icon
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-6.364-3.682A1 1 0 007 8.5v7a1 1 0 001.388.924l6.364-3.682a1 1 0 000-1.664z" />
-            </svg>
-          )}
-        </button>
+        <input type="checkbox" className="toggle checked:bg-green-300 bg-red-300 text-black" title="Play/Pause" checked={backgroundVideoPlaying} onChange={toggleBackgroundVideoPlaying} />
+
+        {/* Sound Button */}
+        <input type="checkbox" className="toggle checked:bg-green-300 bg-red-300 text-black" title="Mute/Unmute" checked={backgroundVideoSound} onChange={setBackgroundVideoSound} />
 
       </div>
 
@@ -53,9 +49,9 @@ export default function Home() {
       <video
         ref={videoRef}
         src="assets/background.mp4"
+        muted={!backgroundVideoSound}
         autoPlay
         loop
-        muted
         disablePictureInPicture
         onContextMenu={(e) => e.preventDefault()}
         className="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none"
