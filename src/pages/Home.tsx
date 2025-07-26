@@ -1,5 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { DataContext } from "../context";
+import { Link } from "react-router-dom";
 
 export default function Home() {
 
@@ -66,6 +67,14 @@ export default function Home() {
             <img src={data?.invite.guild.icon({})} alt="Logo" className="w-64 h-64 rounded-full" />
             <h1 className="text-4xl font-bold mb-4">{data?.invite.guild.name}</h1>
             <p className="font-bold italic">{data?.invite.guild.description}</p>
+            <div className="flex flex-grow items-center mt-8">
+              <a href={`https://discord.gg/${data?.invite.guild.id}`} className="btn btn-primary mt-4" target="_blank" rel="noopener noreferrer">
+                Join the Guild
+              </a>
+              <Link to="/about" className="btn btn-soft bg-gray-200 border-gray-300 mt-4 ml-4">
+                About Us
+              </Link>
+            </div>
           </div>
 
         </div>
