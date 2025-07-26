@@ -46,6 +46,13 @@ export default function Layout() {
 
             // Set document title
             window.document.title = inviteData.guild.name;
+            // Set icon
+            if (inviteData.guild.icon) {
+              const link = document.createElement('link');
+              link.rel = 'icon';
+              link.href = inviteData.guild.icon({ size: 32 });
+              document.head.appendChild(link);
+            }
           })
           .catch(error => {
             console.error("Error fetching invite status:", error);
