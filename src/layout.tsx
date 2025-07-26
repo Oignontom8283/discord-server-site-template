@@ -28,16 +28,24 @@ export default function Layout() {
   const { data, setData } = useContext(DataContext);
 
   useEffect(() => {
+
+    // Fetch config file in public directory
     axios.get('/config.yaml')
       .then(response => {
-        const config = yaml.load(response.data) as Record<string, any>;
+        const config = yaml.load(response.data) as Record<string, any>; // transform YAML to JSON
 
+        // Fetch invite status using the code from config
         getInviteStatus(config.code)
           .then(inviteData => {
+            
+            // Set data in context
             setData({
               invite: inviteData,
               config: config
             });
+
+            // Set document title
+            window.document.title = inviteData.guild.name;
           })
           .catch(error => {
             console.error("Error fetching invite status:", error);
@@ -50,6 +58,7 @@ export default function Layout() {
       });
   }, []);
 
+  // If there's an error, display it
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-red-100">
@@ -58,6 +67,7 @@ export default function Layout() {
     );
   }
 
+  // If data is not yet loaded, show a loading spinner
   if (!data) {
     return (
       <div className="flex items-center justify-center min-h-screen">
