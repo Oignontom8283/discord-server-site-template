@@ -6,6 +6,8 @@ import { DataContext } from "./context";
 import axios from "axios";
 import * as yaml from 'js-yaml'
 import { getInviteStatus } from "discord-guildpeek";
+import type z from "zod";
+import { configZodShemat } from "./shemat";
 
 export default function Layout() {
   const [height, setHeight] = useState(0);
@@ -32,7 +34,16 @@ export default function Layout() {
     // Fetch config file in public directory
     axios.get('/config.yaml')
       .then(response => {
-        const config = yaml.load(response.data) as Record<string, any>; // transform YAML to JSON
+        const configRaw = yaml.load(response.data); // transform YAML to JSON
+
+        const configParseResult = configZodShemat.safeParse(configRaw);
+
+        if (!configParseResult.success) {
+          setError("Invalid config format.");
+          return;
+        }
+
+        const config = configParseResult.data;
 
         // Fetch invite status using the code from config
         getInviteStatus(config.code)
