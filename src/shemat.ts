@@ -1,10 +1,17 @@
 import z from "zod";
 
+const pageShemat = z.object({
+    color: z.enum(["dark", "light"]).default("dark"),
+    background: z.string().default("white"),
+    content: z.string().default(""),
+})
+
 export const configZodShemat = z.object({
     code: z.string().min(1, "Code is required"),
-    background: z.string().min(1, "Background is required"), // Video, image, gif, or Hex color
     join: z.string().url("Join URL must be a valid URL"),
-    paragraphs: z.object({
-        home: z.string().default(""),
+    article: z.boolean().default(true),
+    pages: z.object({
+        home: pageShemat,
+        about: pageShemat,
     })
 })
