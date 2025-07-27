@@ -54,8 +54,6 @@ export default function Layout() {
               config: config
             });
 
-            // Set document title
-            window.document.title = inviteData.guild.name;
             // Set icon
             if (inviteData.guild.icon) {
               const link = document.createElement('link');

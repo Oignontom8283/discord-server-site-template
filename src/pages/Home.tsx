@@ -52,9 +52,12 @@ export default function Home() {
     };
   }, [backgroundVideoPlaying]);
 
+
   const { data } = useContext(DataContext);
 
-  console.log("Datacontext", data)
+  useEffect(() => {
+    document.title = data?.invite.guild.name!;
+  }, []);
 
   return (
     <div className="relative min-h-screen">
@@ -72,7 +75,7 @@ export default function Home() {
       {/* Vidéo background */}
       <video
         ref={videoRef}
-        src="assets/background.mp4"
+        src={data?.config.pages.home.background}
         muted={!backgroundVideoSound}
         autoPlay
         loop
@@ -88,15 +91,28 @@ export default function Home() {
 
           <div className="flex flex-col items-center justify-center text-center p-24">
             <img src={data?.invite.guild.icon({})} alt="Logo" className="w-64 h-64 rounded-full" />
-            <h1 className="text-4xl font-bold mb-4">{data?.invite.guild.name}</h1>
+            <h1 className="text-4xl font-bold mb-1">{data?.invite.guild.name}</h1>
+
+            {/* members indicator */}
+            <div className="flex items-center justify-center gap-3 mb-3">
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-3 h-3 bg-green-500 rounded-full"></span>
+                <span>{data?.invite.guild.onlines} online</span>
+              </div>
+              <div className="flex items-center justify-center gap-2">
+                <span className="w-3 h-3 bg-gray-500 rounded-full"></span>
+                <span>{data?.invite.guild.members} members</span>
+              </div>
+            </div>
+
             <p className="font-bold italic">{data?.invite.guild.description}</p>
             
-            <div className="flex flex-grow items-center mt-8">
+            <div className="flex flex-grow items-center mt-4">
 
-              <a href={data?.config.join} className="btn btn-primary mt-4" target="_blank" rel="noopener noreferrer">
+              <a href={data?.config.join} className="btn btn-primary shadow-none bg-[#1D863B] hover:bg-[#2B7739] border-none text-white mt-4" target="_blank" rel="noopener noreferrer">
                 Join the Guild
               </a>
-              <Link to="/about" className="btn btn-soft bg-gray-200 border-gray-300 mt-4 ml-4">
+              <Link to="/about" className="btn btn-soft bg-slate-300/70 border-none hover:bg-slate-400 shadow-none mt-4 ml-4">
                 About Us
               </Link>
             </div>
@@ -105,9 +121,9 @@ export default function Home() {
           
           {/* Markdown Content */}
           <div className="max-w-2xl mx-auto px-4 mb-24">
-            <div className="prose prose-invert max-w-[100ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
+            <div className="prose prose-invert max-w-[110ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
               <ReactMarkdown>
-                {Mustache.render(data?.config.paragraphs.home || "", {
+                {Mustache.render(data?.config.pages.home.content || "", {
                   guild: data?.invite.guild,
                   channel: data?.invite.channel,
                   user: data?.invite.inviter,
