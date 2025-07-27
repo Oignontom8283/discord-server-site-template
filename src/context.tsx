@@ -3,7 +3,7 @@ import type { DiscordInviteStatusV9 } from 'discord-guildpeek';
 import type z from "zod";
 import type { configZodShemat } from "./shemat";
 
-type DataContextType = {
+export type DataContextType = {
   invite: DiscordInviteStatusV9;
   config: z.infer<typeof configZodShemat>;
   // others data for future use.
