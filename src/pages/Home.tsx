@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { DataContext } from "../context";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
@@ -21,6 +21,7 @@ export default function Home() {
       setState(!state);
     }] as const;
   })();
+
   const [backgroundVideoSound, setBackgroundVideoSound] = (() => {
     const [state, setState] = useState(false);
     return [state, () => {
@@ -30,6 +31,26 @@ export default function Home() {
       setState(!state);
     }] as const;
   })();
+
+  // Pause video when tab is not visible
+  // and resume when it is visible again.
+  useEffect(() => {
+    const changeVisibility = () => {
+      if (videoRef.current) {
+        if (document.visibilityState === "hidden") {
+          videoRef.current.pause();
+        } else {
+          if (backgroundVideoPlaying) {
+            videoRef.current.play();
+          }
+        }
+      }
+    }
+    document.addEventListener("visibilitychange", changeVisibility);
+    return () => {
+      document.removeEventListener("visibilitychange", changeVisibility);
+    };
+  }, [backgroundVideoPlaying]);
 
   const { data } = useContext(DataContext);
 
@@ -81,7 +102,8 @@ export default function Home() {
             </div>
 
           </div>
-
+          
+          {/* Markdown Content */}
           <div className="max-w-2xl mx-auto px-4 mb-24">
             <div className="prose prose-invert max-w-[100ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
               <ReactMarkdown>
