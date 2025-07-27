@@ -15,3 +15,27 @@ export const configZodShemat = z.object({
         about: pageShemat,
     })
 })
+
+
+// 
+
+
+export const articlesZodShemat = z.array(z.object({
+    id: z.string().min(1, "ID is required"), // Unique identifier for the article
+    title: z.string().min(1, "Title is required"), // Unique title for the article
+    author: z.string().min(1, "Author is required"),
+    date: z.string().min(1, "Date is required"),
+    tags: z.array(z.string()).default([]),
+    icon: z.string().min(1).optional(),
+    content: z.string().min(1, "Content is required"),
+}))
+.refine(
+    (articles) => {
+        const ids = articles.map(article => article.id.toLowerCase().trim());
+        const titles = articles.map(article => article.title.toLowerCase().trim());
+        return new Set(ids).size === ids.length && new Set(titles).size === titles.length;
+    },
+    {
+        message: "Article titles and IDs must be unique.",
+    }
+);
