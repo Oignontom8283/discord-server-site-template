@@ -3,9 +3,9 @@ join: "<YOUR_JOIN_URL>" # Replace with your discord join URL (exemple : https://
 article: true # Set to true if you want to display the article section
 pages:
   home:
-    color: "dark" # Color of the text, can be "dark" or "light"
-    background: "<YOUR_HOME_BACKGROUND_SOURCE>" # video, image, gif, or hex color (exemple: #ff0000)
-    content: |
+    color: "dark" # Color of the text, can be "dark" or "light" (optional, default: dark)
+    background: "<YOUR_HOME_BACKGROUND_SOURCE>" # video, image, gif, or hex color (exemple: #ff0000) (optional, default: white)
+    content: | # Home page content in Markdown format
       # TITRE
       ## Sous-titre
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
