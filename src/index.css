@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* Prose styles for Tailwind CSS Typography plugin */
+.prose.prose-invert :where(h1, h2, h3, h4, h5, h6, p, li, strong, a, code, blockquote) {
+  color: white !important;
+}
+
+.prose.prose-invert :where(::marker) {
+  color: white !important;
+}
+
+.prose.prose-invert :where(hr) {
+  border-color: white !important;
+}
+.prose.prose-invert ul > li::marker,
+.prose.prose-invert ol > li::marker {
+  color: white !important;
+}
