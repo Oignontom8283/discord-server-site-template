@@ -1,6 +1,8 @@
 import { useContext, useRef, useState } from "react";
 import { DataContext } from "../context";
+import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
+import Mustache from "mustache";
 
 export default function Home() {
 
@@ -59,21 +61,37 @@ export default function Home() {
       />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col min-h-screen text-white">
+      <div className="relative z-10 flex flex-col min-h-screen">
 
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center text-white">
 
           <div className="flex flex-col items-center justify-center text-center p-24">
             <img src={data?.invite.guild.icon({})} alt="Logo" className="w-64 h-64 rounded-full" />
             <h1 className="text-4xl font-bold mb-4">{data?.invite.guild.name}</h1>
             <p className="font-bold italic">{data?.invite.guild.description}</p>
+            
             <div className="flex flex-grow items-center mt-8">
-              <a href={`https://discord.gg/${data?.invite.guild.id}`} className="btn btn-primary mt-4" target="_blank" rel="noopener noreferrer">
+
+              <a href={data?.config.join} className="btn btn-primary mt-4" target="_blank" rel="noopener noreferrer">
                 Join the Guild
               </a>
               <Link to="/about" className="btn btn-soft bg-gray-200 border-gray-300 mt-4 ml-4">
                 About Us
               </Link>
+            </div>
+
+          </div>
+
+          <div className="max-w-2xl mx-auto px-4 mb-24">
+            <div className="prose prose-invert max-w-[100ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
+              <ReactMarkdown>
+                {Mustache.render(data?.config.paragraphs.home || "", {
+                  guild: data?.invite.guild,
+                  channel: data?.invite.channel,
+                  user: data?.invite.inviter,
+                  config: data?.config,
+                })}
+              </ReactMarkdown>
             </div>
           </div>
 
