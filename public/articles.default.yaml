@@ -1,0 +1,30 @@
+
+# Example YAML file for articles
+# This file contains a list of articles with their metadata and content.
+
+- id: "1" # Unique identifier for the article. The id should be unique across all articles. UUID or incremental ids are recommended. (the id is used in the URL to access the article)
+  title: "Article 1" # Title of the article
+  author: "Auteur 1" # Author of the article
+  date: "2023-01-01" # Publication date of the article
+  tags: ["mechanica", "community", "game"] # Tags associated with the article (optional, default: empty array)
+  icon: "assets/icon.png" # Icon for the article, can be a URL or a local path (optional, empty = no icon)
+  content: | # Content of the article (Markdown format supported)
+    Contenue de l'article 1. C'est un exemple d'article qui pourrait être affiché sur la page d'accueil du site. Il contient des informations pertinentes et intéressantes pour les membres de la communauté.
+
+- id: "2" # example of another article
+  title: "Article 2"
+  author: "Auteur 2"
+  date: "2023-01-02"
+  tags: ["mechanica", "community", "game"]
+  # no icon specified, will not be displayed
+  content: |
+    Contenu de l'article 2. C'est un exemple d'article qui pourrait être affiché sur la page d'accueil du site. Il contient des informations pertinentes et intéressantes pour les membres de la communauté.
+
+- id: "3" # example of another article
+  title: "Article 3"
+  author: "Auteur 3"
+  date: "2023-01-03"
+  tags: ["mechanica", "community", "game"]
+  icon: "assets/icon.png"
+  content: |
+    Contenu de l'article 3. C'est un exemple d'article qui pourrait être affiché sur la page d'accueil du site. Il contient des informations pertinentes et intéressantes pour les membres de la communauté.
