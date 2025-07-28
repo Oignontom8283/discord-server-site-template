@@ -24,7 +24,7 @@ export default function Articles() {
         <ul className="list m-3">
 
           {data.articles.map(article => (
-            <Link to={`/artiicle/${article.id}`} key={article.id} className="">
+            <Link to={`/article/${article.id}`} key={article.id} className="">
               <li className="list-row hover:bg-base-200 p-2">
                 
                 {article.icon && <img src={article.icon} alt="Article Icon" className="w-12 h-12 rounded-box mr-1" />}
