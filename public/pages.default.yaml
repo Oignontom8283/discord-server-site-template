@@ -1,0 +1,17 @@
+home: # Home page configuration
+  color: "light" # Color of the text, can be "dark" or "light"
+  background: "<YOUR_HOME_BACKGROUND_SOURCE>" # video, image, gif, or hex color (exemple: #ff0000) (optional, default: white)
+  content: | # Home page content in Markdown format
+    # TITRE
+    ## SUBTITLE
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+
+about: # About page configuration
+  color: "dark" 
+  background: "assets/about-background.jpg"
+  content: |
+    # TITRE
+    ## SUBTITLE
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
