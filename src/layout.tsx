@@ -7,6 +7,7 @@ import axios from "axios";
 import * as yaml from 'js-yaml'
 import { getInviteStatus } from "discord-guildpeek";
 import { articlesZodShemat, configZodShemat, pagesZodShemat } from "./shemat";
+import Alert from "./components/Alert";
 
 export default function Layout() {
   const [height, setHeight] = useState(0);
@@ -146,7 +147,7 @@ export default function Layout() {
   if (error) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-red-100">
-        <span className="text-red-500">{error}</span>
+        <Alert alertType="error">{error}</Alert>
       </div>
     );
   }
