@@ -27,3 +27,5 @@ package-lock.json
 public/assets
 pnpm-lock.yaml
 public/config.yaml
+public/pages.yaml
+public/articles.yaml
