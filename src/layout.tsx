@@ -6,7 +6,7 @@ import { DataContext } from "./context";
 import axios from "axios";
 import * as yaml from 'js-yaml'
 import { getInviteStatus } from "discord-guildpeek";
-import { configZodShemat } from "./shemat";
+import { configZodShemat, pagesZodShemat } from "./shemat";
 
 export default function Layout() {
   const [height, setHeight] = useState(0);
@@ -31,8 +31,51 @@ export default function Layout() {
   useEffect(() => {
 
     // Fetch config file in public directory
-    axios.get('/config.yaml')
-      .then(response => {
+    // axios.get('/config.yaml')
+    //   .then(response => {
+    //     const configRaw = yaml.load(response.data); // transform YAML to JSON
+
+    //     const configParseResult = configZodShemat.safeParse(configRaw);
+
+    //     if (!configParseResult.success) {
+    //       setError("Invalid config format.");
+    //       return;
+    //     }
+
+    //     const config = configParseResult.data;
+
+    //     // Fetch invite status using the code from config
+    //     getInviteStatus(config.code)
+    //       .then(inviteData => {
+            
+    //         // Set data in context
+    //         setData({
+    //           invite: inviteData,
+    //           config: config,
+              
+    //         });
+
+    //         // Set icon
+    //         if (inviteData.guild.icon) {
+    //           const link = document.createElement('link');
+    //           link.rel = 'icon';
+    //           link.href = inviteData.guild.icon({ size: 32 });
+    //           document.head.appendChild(link);
+    //         }
+    //       })
+    //       .catch(error => {
+    //         console.error("Error fetching invite status:", error);
+    //         setError("Failed to fetch invite status.");
+    //       });
+    //   })
+    //   .catch(error => {
+    //     console.error("Error fetching config:", error);
+    //     setError("Failed to fetch config.");
+    //   });
+
+    (async () => {
+      try {
+        const response = await axios.get('/config.yaml');
         const configRaw = yaml.load(response.data); // transform YAML to JSON
 
         const configParseResult = configZodShemat.safeParse(configRaw);
@@ -45,32 +88,41 @@ export default function Layout() {
         const config = configParseResult.data;
 
         // Fetch invite status using the code from config
-        getInviteStatus(config.code)
-          .then(inviteData => {
-            
-            // Set data in context
-            setData({
-              invite: inviteData,
-              config: config
-            });
+        const inviteData = await getInviteStatus(config.code);
 
-            // Set icon
-            if (inviteData.guild.icon) {
-              const link = document.createElement('link');
-              link.rel = 'icon';
-              link.href = inviteData.guild.icon({ size: 32 });
-              document.head.appendChild(link);
-            }
-          })
-          .catch(error => {
-            console.error("Error fetching invite status:", error);
-            setError("Failed to fetch invite status.");
-          });
-      })
-      .catch(error => {
-        console.error("Error fetching config:", error);
-        setError("Failed to fetch config.");
-      });
+
+        const responsePages = await axios.get('/pages.yaml');
+        const pagesRaw = yaml.load(responsePages.data); // transform YAML to JSON
+
+        const pagesParseResult = pagesZodShemat.safeParse(pagesRaw);
+
+        if (!pagesParseResult.success) {
+          setError("Invalid pages format.");
+          return;
+        }
+
+        const pages = pagesParseResult.data;
+
+        // Set data in context
+        setData({
+          invite: inviteData,
+          config: config,
+          pages: pages
+        });
+
+        // Set icon
+        if (inviteData.guild.icon) {
+          const link = document.createElement('link');
+          link.rel = 'icon';
+          link.href = inviteData.guild.icon({ size: 32 });
+          document.head.appendChild(link);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("Failed to fetch data.");
+      }
+    })()
+
   }, []);
 
   // If there's an error, display it
