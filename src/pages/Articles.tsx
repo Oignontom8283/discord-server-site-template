@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { DataContext } from "../context";
 import Alert from "../components/Alert";
+import { Link } from "react-router-dom";
 
 export default function Articles() {
   const { data } = useContext(DataContext);
@@ -20,18 +21,35 @@ export default function Articles() {
       
       <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
         <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</span>
-        <ul className="list">
+        <ul className="list m-3">
+
           {data.articles.map(article => (
-            <li key={article.id} className="list-row">
-              {article.icon && <img src={article.icon} alt="Article Icon" className="w-12 h-12 rounded-box mr-4" />}
-              <div>
-                <div className="text-sm">{article.title}</div>
-                <div className="text-xs uppercase font-semibold opacity-60">{article.author}</div>
-              </div>
-              <span className="text-xs opacity-60">{article.date}</span>
-              <p>{article.content.slice(0, 16)}</p>
-            </li>
+            <Link to={`/artiicle/${article.id}`} key={article.id} className="">
+              <li className="list-row hover:bg-base-200 p-2">
+                
+                {article.icon && <img src={article.icon} alt="Article Icon" className="w-12 h-12 rounded-box mr-1" />}
+                
+                <div>
+                  <span className="text-sm">{article.title}</span>
+
+                  <div className="list-col-grow flex flex-col mt-2">
+                    <div className="flex flex-row gap-3">
+                      <div className="text-xs uppercase font-semibold opacity-60">{article.author}</div>
+                      <span className="text-xs opacity-60" title={"Published on " + article.date.toLocaleString()}>{article.date.toLocaleDateString()}</span>
+                    </div>
+
+                    <ul className=" flex flex-wrap gap-1 mt-2" title={'Tags: ' + article.tags.join(", ")}>
+                      {article.tags.map(tag => <li key={tag} className="badge badge-soft badge-info">{tag}</li>)}
+                    </ul>
+
+                  </div>
+                </div>
+                
+                {/* <p className="break-words overflow-hidden">{article.content.slice(0, 100)}</p> */}
+              </li>
+            </Link>
           ))}
+
         </ul>
       </div>
 
