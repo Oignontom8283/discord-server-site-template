@@ -15,7 +15,7 @@ export const articlesZodShemat = z.array(z.object({
     id: z.string().min(1, "ID is required"), // Unique identifier for the article
     title: z.string().min(1, "Title is required"), // Unique title for the article
     author: z.string().min(1, "Author is required"),
-    date: z.string().min(1, "Date is required"),
+    date: z.string().min(1, "Date is required").transform(date => new Date(date)).refine(date => !isNaN(date.getTime()), {message: "Invalid date format. Please use a valid date string.",}),
     tags: z.array(z.string()).default([]),
     icon: z.string().min(1).optional(),
     content: z.string().min(1, "Content is required"),
