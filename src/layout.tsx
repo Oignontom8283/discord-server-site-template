@@ -6,7 +6,7 @@ import { DataContext } from "./context";
 import axios from "axios";
 import * as yaml from 'js-yaml'
 import { getInviteStatus } from "discord-guildpeek";
-import { configZodShemat, pagesZodShemat } from "./shemat";
+import { articlesZodShemat, configZodShemat, pagesZodShemat } from "./shemat";
 
 export default function Layout() {
   const [height, setHeight] = useState(0);
@@ -75,8 +75,10 @@ export default function Layout() {
 
     (async () => {
       try {
-        const response = await axios.get('/config.yaml');
-        const configRaw = yaml.load(response.data); // transform YAML to JSON
+
+        // Fetch config file in public directory
+        const responseConfig = await axios.get('/config.yaml');
+        const configRaw = yaml.load(responseConfig.data); // transform YAML to JSON
 
         const configParseResult = configZodShemat.safeParse(configRaw);
 
@@ -90,7 +92,7 @@ export default function Layout() {
         // Fetch invite status using the code from config
         const inviteData = await getInviteStatus(config.code);
 
-
+        // Fetch pages
         const responsePages = await axios.get('/pages.yaml');
         const pagesRaw = yaml.load(responsePages.data); // transform YAML to JSON
 
@@ -103,11 +105,26 @@ export default function Layout() {
 
         const pages = pagesParseResult.data;
 
+        // Fetch articles
+        const responseArticles = await axios.get('/articles.yaml');
+        const articlesRaw = yaml.load(responseArticles.data); // transform YAML to JSON
+
+        const articlesParseResult = articlesZodShemat.safeParse(articlesRaw);
+
+        if (!articlesParseResult.success) {
+          setError("Invalid articles format.");
+          return;
+        }
+
+        const articles = articlesParseResult.data;
+
+
         // Set data in context
         setData({
           invite: inviteData,
           config: config,
-          pages: pages
+          pages: pages,
+          articles: articles
         });
 
         // Set icon
