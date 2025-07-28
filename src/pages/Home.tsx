@@ -75,7 +75,7 @@ export default function Home() {
       {/* Vidéo background */}
       <video
         ref={videoRef}
-        src={data?.config.pages.home.background}
+        src={data?.pages.home.background}
         muted={!backgroundVideoSound}
         autoPlay
         loop
@@ -123,7 +123,7 @@ export default function Home() {
           <div className="max-w-2xl mx-auto px-4 mb-24">
             <div className="prose prose-invert max-w-[110ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
               <ReactMarkdown>
-                {Mustache.render(data?.config.pages.home.content || "", {
+                {Mustache.render(data?.pages.home.content || "", {
                   guild: data?.invite.guild,
                   channel: data?.invite.channel,
                   user: data?.invite.inviter,

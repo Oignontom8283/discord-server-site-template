@@ -14,7 +14,7 @@ export default function About() {
   return <div className="flex-1 flex items-center justify-center">
     <div className="prose max-w-2xl p-12">
       <Markdown>
-        {templateRenderContent(data?.config.pages.about.content || "", data!)}
+        {templateRenderContent(data?.pages.about.content || "", data!)}
       </Markdown>
     </div>
   </div>
