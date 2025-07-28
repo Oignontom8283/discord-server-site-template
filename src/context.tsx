@@ -1,12 +1,13 @@
 import React, { createContext, useState } from "react";
 import type { DiscordInviteStatusV9 } from 'discord-guildpeek';
 import type z from "zod";
-import type { configZodShemat, pagesZodShemat } from "./shemat";
+import type { articlesZodShemat, configZodShemat, pagesZodShemat } from "./shemat";
 
 export type DataContextType = {
   invite: DiscordInviteStatusV9;
   config: z.infer<typeof configZodShemat>;
   pages: z.infer<typeof pagesZodShemat>;
+  articles: z.infer<typeof articlesZodShemat>;
   // others data for future use.
 }
 
