@@ -4,6 +4,11 @@ import { DataContext } from "../context";
 import Error404 from "./Error404";
 import Markdown from "react-markdown";
 
+/**
+ * The width of the article content area. (in pixels)
+ */
+const width = 700;
+
 export default function Article() {
   const { data } = useContext(DataContext);
   const { id } = useParams<{ id: string }>();
@@ -20,17 +25,23 @@ export default function Article() {
 
   return (
     <div className="flex-1 flex flex-col items-center">
-      <div>
+      <div className="flex flex-col items-center">
         <h1 className="text-3xl font-bold m-12">{article.title}</h1>
-        <span className="text-sm opacity-60">Published on {article.date.toLocaleDateString()}</span>
-        <div className="flex flex-row gap-3 mt-2">
-          <span className="text-xs uppercase font-semibold opacity-60">{article.author}</span>
+
+        <div className="flex flex-col items-start gap-3 m-5 bg-base-100 rounded-box shadow-lg p-5" style={{ width: `${width}px` }}>
+
+          <div className="flex flex-row gap-3 mt-2 items-center">
+            <span className="text-sm opacity-60" title={`Published on ${article.date.toLocaleString()}`}>Published on {article.date.toLocaleDateString()}</span>
+            <span className="text-xs uppercase font-semibold opacity-60" title={`Author: ${article.author}`}>{article.author}</span>
+          </div>
           <ul className="flex flex-wrap gap-1" title={'Tags: ' + article.tags.join(", ")}>
             {article.tags.map(tag => <li key={tag} className="badge badge-soft badge-info">{tag}</li>)}
           </ul>
+
         </div>
+
       </div>
-      <div className="prose max-w-[700px] m-10">
+      <div className="prose m-10" style={{ maxWidth: `${width}px` }}>
         <Markdown>{article.content}</Markdown>
       </div>
     </div>
