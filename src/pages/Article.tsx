@@ -13,6 +13,10 @@ export default function Article() {
   const { data } = useContext(DataContext);
   const { id } = useParams<{ id: string }>();
 
+  if (!data?.articles || !id) {
+    return <Error404 />;
+  }
+
   const article = data?.articles.find(article => article.id === id);
 
   if (!article) {
