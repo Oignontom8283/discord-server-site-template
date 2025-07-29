@@ -24,7 +24,7 @@ export default function Articles() {
       <h1 className="text-2xl font-bold m-5">Articles</h1>
       
       <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
-        <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">Most played songs this week</span>
+        <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">All Articles : {data.articles.length}</span>
         <ul className="list m-3">
 
           {data.articles.map(article => (
