@@ -1,10 +1,14 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { DataContext } from "../context";
 import Alert from "../components/Alert";
 import { Link } from "react-router-dom";
 
 export default function Articles() {
   const { data } = useContext(DataContext);
+
+  useEffect(() => {
+    document.title = "Articles - " + data?.invite.guild.name;
+  }, []);
 
   if (!data?.config.article) {
     return (
