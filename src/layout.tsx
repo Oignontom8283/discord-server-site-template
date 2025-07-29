@@ -18,6 +18,10 @@ export default function Layout() {
       const navbarHeight = document.getElementById("navbar")?.offsetHeight || 0;
       const windowHeight = window.innerHeight;
 
+      // console.log("Navbar height:", navbarHeight);
+      // console.log("Window height:", windowHeight);
+      // console.log("Calculated height:", windowHeight - navbarHeight);
+
       setHeight(windowHeight - navbarHeight + 1);
     }
 
@@ -145,6 +149,7 @@ export default function Layout() {
 
   // If there's an error, display it
   if (error) {
+    document.title = "Error - " + error;
     return (
       <div className="flex items-center justify-center min-h-screen bg-red-100">
         <Alert alertType="error">{error}</Alert>
