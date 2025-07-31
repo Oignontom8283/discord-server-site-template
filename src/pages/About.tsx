@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react"
 import { DataContext } from "../context";
 import Markdown from "react-markdown";
 import { templateRenderContent } from "../utils";
+import remarkGfm from "remark-gfm";
 
 export default function About() {
 
@@ -13,7 +14,7 @@ export default function About() {
 
   return <div className="flex-1 flex items-center justify-center">
     <div className="prose max-w-2xl p-12">
-      <Markdown>
+      <Markdown remarkPlugins={[remarkGfm]}>
         {templateRenderContent(data?.pages.about.content || "", data!)}
       </Markdown>
     </div>

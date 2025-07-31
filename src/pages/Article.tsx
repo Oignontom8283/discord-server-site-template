@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { DataContext } from "../context";
 import Error404 from "./Error404";
 import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 /**
  * The width of the article content area. (in pixels)
@@ -46,7 +47,7 @@ export default function Article() {
 
       </div>
       <div className="prose m-10" style={{ maxWidth: `${width}px` }}>
-        <Markdown>{article.content}</Markdown>
+        <Markdown remarkPlugins={[remarkGfm]}>{article.content}</Markdown>
       </div>
     </div>
   )

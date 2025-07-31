@@ -3,6 +3,7 @@ import { DataContext } from "../context";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import Mustache from "mustache";
+import remarkGfm from "remark-gfm";
 
 export default function Home() {
 
@@ -122,7 +123,7 @@ export default function Home() {
           {/* Markdown Content */}
           <div className="max-w-2xl mx-auto px-4 mb-24">
             <div className="prose prose-invert max-w-[110ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
-              <ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {Mustache.render(data?.pages.home.content || "", {
                   guild: data?.invite.guild,
                   channel: data?.invite.channel,
