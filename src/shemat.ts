@@ -1,11 +1,5 @@
 import z from "zod";
 
-const trim = (value: string) => value.trim();
-
-
-//
-
-
 export const configZodShemat = z.object({
     code: z.string().trim().min(1, "Code is required"),
     join: z.string().trim().url("Join URL must be a valid URL"),
