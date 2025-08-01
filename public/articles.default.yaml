@@ -5,7 +5,7 @@
   title: "Article 1" # Title of the article
   author: "Author 1" # Author of the article
   date: "2023-01-01" # Publication date of the article
-  tags: ["mechanica", "community", "game"] # Tags associated with the article (optional, default: empty array)
+  tags: ["food", "community", "building"] # Tags associated with the article (optional, default: empty array)
   icon: "assets/icon.png" # Icon for the article, can be a URL or a local path (optional, empty = no icon)
   content: | # Content of the article (Markdown format supported)
     Content of article 1. This is a sample article that could be displayed on the site's homepage. It contains relevant and interesting information for community members.
@@ -14,7 +14,7 @@
   title: "Article 2"
   author: "Author 2"
   date: "2023-01-02"
-  tags: ["mechanica", "community", "game"]
+  tags: ["food", "community"]
   # no icon specified, will not be displayed
   content: |
     Content of article 2. This is a sample article that could be displayed on the site's homepage. It contains relevant and interesting information for community members.
@@ -23,7 +23,7 @@
   title: "Article 3"
   author: "Author 3"
   date: "2023-01-03"
-  tags: ["mechanica", "community", "game"]
+  tags: ["building", "community", "food"]
   icon: "assets/icon.png"
   content: |
     Content of article 3. This is a sample article that could be displayed on the site's homepage. It contains relevant and interesting information for community members.
