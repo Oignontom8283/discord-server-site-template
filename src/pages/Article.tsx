@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { DataContext } from "../context";
 import Error404 from "./Error404";
 import Markdown from "react-markdown";
@@ -37,7 +37,7 @@ export default function Article() {
          
         <h1 className="text-3xl font-bold m-12">{article.title}</h1>
 
-        <div className="flex flex-col items-start gap-3 m-5 bg-base-100 rounded-box shadow-lg p-5" style={{ width: `${width}px` }}>
+        <div className="flex flex-col items-start gap-3 m-5 bg-base-100 rounded-box shadow-lg p-5 relative" style={{ width: `${width}px` }}>
 
           <div className="flex flex-row gap-3 mt-2 items-center">
             <span className="text-sm opacity-60" title={`Published on ${article.date.toLocaleString()}`}>Published on {article.date.toLocaleDateString()}</span>
@@ -46,6 +46,10 @@ export default function Article() {
           <ul className="flex flex-wrap gap-1" title={'Tags: ' + article.tags.join(", ")}>
             {article.tags.map(tag => <li key={tag} className="badge badge-soft badge-info">{tag}</li>)}
           </ul>
+
+          <Link to="/articles/" className="btn btn-soft ml-auto absolute top-3 right-3 w-8 h-8" title="Back to Articles">
+            &lt;
+          </Link>
 
         </div>
 

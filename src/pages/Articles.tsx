@@ -30,9 +30,9 @@ export default function Articles() {
           {data.articles.map(article => (
             <Link to={`/article/${article.id}`} key={article.id} className="">
               <li className="list-row hover:bg-base-200 p-2">
-                
-                {article.icon && <img src={article.icon} alt="Article Icon" className="w-20 max-h-20 rounded-box mr-1" /> || <div className="w-20 max-h-20 mr-1" />}
-                
+
+                {article.icon && <img src={"/" + article.icon} alt="Article Icon" className="w-20 max-h-20 rounded-box mr-1" /> || <div className="w-20 max-h-20 mr-1" />}
+
                 <div>
                   <span className="text-sm">{article.title}</span>
 
