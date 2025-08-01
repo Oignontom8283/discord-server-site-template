@@ -1,10 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context";
 import Alert from "../components/Alert";
 import { Link } from "react-router-dom";
 
 export default function Articles() {
   const { data } = useContext(DataContext);
+
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     document.title = "Articles - " + data?.invite.guild.name;
@@ -24,10 +26,32 @@ export default function Articles() {
       <h1 className="text-2xl font-bold m-5">Articles</h1>
       
       <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
-        <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">All Articles : {data.articles.length}</span>
+        
+        <div>
+          <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">All Articles : {data.articles.length}</span>
+          <label className="input">
+            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <g
+                strokeLinejoin="round"
+                strokeLinecap="round"
+                strokeWidth="2.5"
+                fill="none"
+                stroke="currentColor"
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.3-4.3"></path>
+              </g>
+            </svg>
+            <input type="search" className="grow" placeholder="Search" onChange={(e) => setSearch(e.target.value)} value={search} />
+          </label>
+        </div>
+        
         <ul className="list m-3 gap-2">
 
-          {data.articles.map(article => (
+          {data.articles
+          .filter(article => article.title.toLowerCase().includes(search.toLowerCase().trim()))
+          .sort((a, b) => a.date.getTime() - b.date.getTime())
+          .map(article => (
             <Link to={`/article/${article.id}`} key={article.id} className="">
               <li className="list-row hover:bg-base-200 p-2">
 
