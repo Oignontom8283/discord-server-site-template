@@ -31,6 +31,10 @@ export default function Article() {
   return (
     <div className="flex-1 flex flex-col items-center">
       <div className="flex flex-col items-center">
+        
+        {/* Display the article icon if it exists */}
+        {article && <img src={'/' + article.icon}  className="mt-8 rounded-box max-h-64"/>}
+         
         <h1 className="text-3xl font-bold m-12">{article.title}</h1>
 
         <div className="flex flex-col items-start gap-3 m-5 bg-base-100 rounded-box shadow-lg p-5" style={{ width: `${width}px` }}>
