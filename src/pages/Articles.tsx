@@ -25,13 +25,13 @@ export default function Articles() {
       
       <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
         <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">All Articles : {data.articles.length}</span>
-        <ul className="list m-3">
+        <ul className="list m-3 gap-2">
 
           {data.articles.map(article => (
             <Link to={`/article/${article.id}`} key={article.id} className="">
               <li className="list-row hover:bg-base-200 p-2">
                 
-                {article.icon && <img src={article.icon} alt="Article Icon" className="w-12 h-12 rounded-box mr-1" />}
+                {article.icon && <img src={article.icon} alt="Article Icon" className="w-20 max-h-20 rounded-box mr-1" /> || <div className="w-20 max-h-20 mr-1" />}
                 
                 <div>
                   <span className="text-sm">{article.title}</span>
