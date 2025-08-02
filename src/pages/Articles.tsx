@@ -27,9 +27,9 @@ export default function Articles() {
       
       <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
         
-        <div>
+        <div className="flex justify-between p-3"> 
           <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">All Articles : {data.articles.length}</span>
-          <label className="input">
+          <label className="input ml-auto">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g
                 strokeLinejoin="round"
