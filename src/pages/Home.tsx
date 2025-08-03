@@ -1,60 +1,16 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context";
 import ReactMarkdown from "react-markdown";
 import { Link } from "react-router-dom";
 import Mustache from "mustache";
 import remarkGfm from "remark-gfm";
+import Background from "../components/Background";
 
 export default function Home() {
 
-  const videoRef = useRef<HTMLVideoElement | null>(null);
-
-  const [backgroundVideoPlaying, toggleBackgroundVideoPlaying] = (() => {
-    const [state, setState] = useState(true);
-    return [state, () => {
-      if (videoRef.current) {
-        if (state) {
-          videoRef.current.pause();
-        } else {
-          videoRef.current.play();
-        }
-      }
-      setState(!state);
-    }] as const;
-  })();
-
-  const [backgroundVideoSound, setBackgroundVideoSound] = (() => {
-    const [state, setState] = useState(false);
-    return [state, () => {
-      if (videoRef.current) {
-        videoRef.current.muted = !state;
-      }
-      setState(!state);
-    }] as const;
-  })();
-
-  // Pause video when tab is not visible
-  // and resume when it is visible again.
-  useEffect(() => {
-    const changeVisibility = () => {
-      if (videoRef.current) {
-        if (document.visibilityState === "hidden") {
-          videoRef.current.pause();
-        } else {
-          if (backgroundVideoPlaying) {
-            videoRef.current.play();
-          }
-        }
-      }
-    }
-    document.addEventListener("visibilitychange", changeVisibility);
-    return () => {
-      document.removeEventListener("visibilitychange", changeVisibility);
-    };
-  }, [backgroundVideoPlaying]);
-
-
   const { data } = useContext(DataContext);
+
+  const [isTextBackground, setIsTextBackground] = useState(false);
 
   useEffect(() => {
     document.title = data?.invite.guild.name!;
@@ -63,27 +19,8 @@ export default function Home() {
   return (
     <div className="relative min-h-screen">
 
-      {/* Contrôle background video */}
-      <div className="fixed bottom-4 right-4 flex flex-col gap-3 z-[100]">
-        {/* Play Button */}
-        <input type="checkbox" className="toggle checked:bg-green-300 bg-red-300 text-black" title="Play/Pause" checked={backgroundVideoPlaying} onChange={toggleBackgroundVideoPlaying} />
-
-        {/* Sound Button */}
-        <input type="checkbox" className="toggle checked:bg-green-300 bg-red-300 text-black" title="Mute/Unmute" checked={backgroundVideoSound} onChange={setBackgroundVideoSound} />
-
-      </div>
-
-      {/* Vidéo background */}
-      <video
-        ref={videoRef}
-        src={data?.pages.home.background}
-        muted={!backgroundVideoSound}
-        autoPlay
-        loop
-        disablePictureInPicture
-        onContextMenu={(e) => e.preventDefault()}
-        className="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none"
-      />
+      {/* Background */}
+      <Background backgroundValue={data?.pages.home.background!} onTypeDetected={(type) => setIsTextBackground(type !== "color")} />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col min-h-screen">
@@ -91,6 +28,7 @@ export default function Home() {
         <div className="flex flex-col items-center justify-center text-white">
 
           <div className="flex flex-col items-center justify-center text-center p-24">
+
             <img src={data?.invite.guild.icon({})} alt="Logo" className="w-64 h-64 rounded-full" />
             <h1 className="text-4xl font-bold mb-1">{data?.invite.guild.name}</h1>
 
@@ -122,7 +60,7 @@ export default function Home() {
           
           {/* Markdown Content */}
           <div className="max-w-2xl mx-auto px-4 mb-24">
-            <div className="prose prose-invert max-w-[110ch] bg-transparent border-transparent hover:bg-gray-700/70 backdrop-blur-none hover:backdrop-blur-sm p-12 rounded-lg hover:border-gray-800 border">
+            <div className={`prose prose-invert max-w-[110ch] bg-transparent border-transparent backdrop-blur-none p-12 rounded-lg border ${isTextBackground ? "hover:backdrop-blur-sm hover:bg-gray-700/70 hover:border-gray-800" : ""}`}>
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {Mustache.render(data?.pages.home.content || "", {
                   guild: data?.invite.guild,
