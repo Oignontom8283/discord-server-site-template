@@ -43,4 +43,8 @@ const pageShemat = z.object({
 export const pagesZodShemat = z.object({
     home: pageShemat,
     about: pageShemat,
+    articles: z.union([
+        pageShemat,
+        z.object({ sub_title: z.string().trim().default("") })
+    ])
 })
