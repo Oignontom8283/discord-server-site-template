@@ -6,9 +6,9 @@ function isImage(url: string): boolean {
 function isVideo(url: string): boolean {
   return /\.(mp4|webm|ogg)$/i.test(url);
 }
-function isColor(value: string): boolean {
-  return /^#[0-9A-Fa-f]{6}$/.test(value) || /^#[0-9A-Fa-f]{3}$/.test(value);
-}
+// function isColor(value: string): boolean {
+//   return /^#[0-9A-Fa-f]{6}$/.test(value) || /^#[0-9A-Fa-f]{3}$/.test(value);
+// }
 
 type BackgroundType = "color" | "image" | "video";
 
