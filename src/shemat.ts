@@ -33,9 +33,10 @@ export const articlesZodShemat = z.array(z.object({
 
 //
 
+export const textColorZodShemat = z.enum(["dark", "light"]).default("dark");
 
 const pageShemat = z.object({
-    color: z.enum(["dark", "light"]).default("dark"),
+    color: ztextColorZodShemat,
     background: z.string().trim().default("white"),
     content: z.string().trim().default("empty content here"),
 })
