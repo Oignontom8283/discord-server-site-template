@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { DataContext } from "../context";
 import Alert from "../components/Alert";
 import { Link } from "react-router-dom";
+import Markdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function Articles() {
   const { data } = useContext(DataContext);
@@ -24,7 +26,14 @@ export default function Articles() {
     <div className="flex-1 flex flex-col items-center">
 
       <h1 className="text-2xl font-bold m-5">Articles</h1>
-      
+
+      {/* Sub title */}
+      <div className="prose m-5">
+        <Markdown remarkPlugins={[remarkGfm]}>
+          {data.pages.articles.sub_title}
+        </Markdown>
+      </div>
+
       <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
         
         <div className="flex justify-between p-3"> 
@@ -33,7 +42,7 @@ export default function Articles() {
           <span className="p-4 pb-2 text-xs opacity-60 tracking-wide">All Articles : {data.articles.length}</span>
           
           {/* Search input */}
-          <label className="input ml-auto">
+          <label className="input ml-auto" title="Search articles by title">
             <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <g
                 strokeLinejoin="round"
@@ -62,11 +71,11 @@ export default function Articles() {
                 {article.icon && <img src={"/" + article.icon} alt="Article Icon" className="w-20 max-h-20 rounded-box mr-1" /> || <div className="w-20 max-h-20 mr-1" />}
 
                 <div>
-                  <span className="text-sm">{article.title}</span>
+                  <span className="text-sm" title={article.title}>{article.title}</span>
 
                   <div className="list-col-grow flex flex-col mt-2">
                     <div className="flex flex-row gap-3">
-                      <div className="text-xs uppercase font-semibold opacity-60">{article.author}</div>
+                      <div className="text-xs uppercase font-semibold opacity-60" title={"Author: " + article.author}>{article.author}</div>
                       <span className="text-xs opacity-60" title={"Published on " + article.date.toLocaleString()}>{article.date.toLocaleDateString()}</span>
                     </div>
 
@@ -83,6 +92,13 @@ export default function Articles() {
           ))}
 
         </ul>
+      </div>
+      
+      {/* Content */}
+      <div className="prose max-w-2xl p-12 mt-5">
+        <Markdown remarkPlugins={[remarkGfm]}>
+          {data.pages.articles.content}
+        </Markdown>
       </div>
 
     </div>
