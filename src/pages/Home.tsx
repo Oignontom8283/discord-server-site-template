@@ -5,10 +5,12 @@ import { Link } from "react-router-dom";
 import Mustache from "mustache";
 import remarkGfm from "remark-gfm";
 import Background from "../components/Background";
+import { isTextColorWhite, textBackground } from "../utils";
 
 export default function Home() {
 
   const { data } = useContext(DataContext);
+  const isWhite = isTextColorWhite(data?.pages.home.color!);
 
   const [isTextBackground, setIsTextBackground] = useState(false);
 
@@ -23,9 +25,9 @@ export default function Home() {
       <Background backgroundValue={data?.pages.home.background!} onTypeDetected={(type) => setIsTextBackground(type !== "color")} />
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col min-h-screen">
+      <div className={`relative z-10 flex flex-col min-h-screen ${isWhite ? "text-white" : ""}`}>
 
-        <div className="flex flex-col items-center justify-center text-white">
+        <div className="flex flex-col items-center justify-center">
 
           <div className="flex flex-col items-center justify-center text-center p-24">
 
@@ -60,7 +62,7 @@ export default function Home() {
           
           {/* Markdown Content */}
           <div className="max-w-2xl mx-auto px-4 mb-24">
-            <div className={`prose prose-invert max-w-[110ch] bg-transparent border-transparent backdrop-blur-none p-12 rounded-lg border ${isTextBackground ? "hover:backdrop-blur-sm hover:bg-gray-700/70 hover:border-gray-800" : ""}`}>
+            <div className={`prose ${isWhite ? "prose-invert" : ""} max-w-[110ch] bg-transparent border-transparent backdrop-blur-none p-12 rounded-lg border ${isTextBackground ? textBackground() : ""}`}>
               <ReactMarkdown remarkPlugins={[remarkGfm]}>
                 {Mustache.render(data?.pages.home.content || "", {
                   guild: data?.invite.guild,

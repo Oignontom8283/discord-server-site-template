@@ -4,11 +4,16 @@ import Alert from "../components/Alert";
 import { Link } from "react-router-dom";
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Background from "../components/Background";
+import { isTextColorWhite, textBackground } from "../utils";
 
 export default function Articles() {
   const { data } = useContext(DataContext);
+  const isWhite = isTextColorWhite(data?.pages.articles.color!);
 
   const [search, setSearch] = useState("");
+
+  const [isTextBackgrounded, setIsTextBackgrounded] = useState(false);
 
   useEffect(() => {
     document.title = "Articles - " + data?.invite.guild.name;
@@ -23,18 +28,20 @@ export default function Articles() {
   }
   
   return (
-    <div className="flex-1 flex flex-col items-center">
+    <div className={`flex-1 flex flex-col items-center ${isWhite ? "text-white" : ''}`}>
+
+      <Background backgroundValue={data.pages.articles.background} onTypeDetected={(type) => setIsTextBackgrounded(type !== "color")} />
 
       <h1 className="text-2xl font-bold m-5">Articles</h1>
 
       {/* Sub title */}
-      <div className="prose m-5">
+      <div className={`prose m-5 ${isWhite ? "prose-invert" : ""} ${isTextBackgrounded ? textBackground() : ""}`}>
         <Markdown remarkPlugins={[remarkGfm]}>
           {data.pages.articles.sub_title}
         </Markdown>
       </div>
 
-      <div className="bg-base-100 rounded-box shadow-lg w-[600px]">
+      <div className="bg-base-100 rounded-box shadow-lg w-[600px] text-black">
         
         <div className="flex justify-between p-3"> 
           
@@ -95,7 +102,7 @@ export default function Articles() {
       </div>
       
       {/* Content */}
-      <div className="prose max-w-2xl p-12 mt-5">
+      <div className={`prose max-w-2xl p-12 mt-5 ${isWhite ? "prose-invert" : ""} ${isTextBackgrounded ? textBackground() : ""}`}>
         <Markdown remarkPlugins={[remarkGfm]}>
           {data.pages.articles.content}
         </Markdown>
