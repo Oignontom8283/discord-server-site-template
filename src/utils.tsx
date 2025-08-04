@@ -9,3 +9,7 @@ export function templateRenderContent(content:string, template: DataContextType)
         config: template.config
     })
 }
+
+export function textBackground(): string {
+    return 'hover:backdrop-blur-sm hover:bg-gray-700/70 hover:border-gray-800'
+}

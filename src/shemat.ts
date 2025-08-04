@@ -46,5 +46,6 @@ export const pagesZodShemat = z.object({
     articles: z.object({ 
         sub_title: z.string().trim().default(""),
         ...pageShemat.shape
-    })
+    }),
+    article: pageShemat.omit({ content: true }),
 })
