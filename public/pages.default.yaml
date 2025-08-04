@@ -23,3 +23,8 @@ articles: # Articles page configuration
   content: |
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
     dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+
+article: # Single article page configuration
+  color: "dark" # Text color for the article page
+  background: "assets/article-background.jpg" # Background for the article page
+  # no content property
