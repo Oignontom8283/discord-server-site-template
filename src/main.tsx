@@ -9,6 +9,7 @@ import Articles from './pages/Articles'
 import { DataProvider } from './context'
 import Error404 from './pages/Error404'
 import Article from './pages/Article'
+import { Legal } from './pages/Legal'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
             <Route path="/about" element={<About />} />
             <Route path="/articles" element={<Articles />} />
             <Route path="/article/:id" element={<Article />} />
+            <Route path="/legal" element={<Legal />} />
             {/* Add more routes as needed */}
             <Route path="*" element={<Error404 />} />
           </Route>
